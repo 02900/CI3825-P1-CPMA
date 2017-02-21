@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include "moveDirTree.h"
 
-int main()
+int main (int argc, char* argv[])
 {
-    pmatch(".", "*");
+    pmatch(".", "*.c");
     return 0;
 }
