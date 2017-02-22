@@ -7,17 +7,9 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
-
-#include <stdio.h>
 #include <string.h>
-
 #include <unistd.h>
 #include <errno.h>
-#include <sys/stat.h>
-
-#include <dirent.h>
-
-
 
 int main (int argc, char *argv[]) {
     pid_t childpid = 0;

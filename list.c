@@ -1,17 +1,11 @@
-#include <sys/types.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <errno.h>
 #include <memory.h>
 
-
 int concat (char* str1, char* str3) {
-
     char c = '/';
 
     size_t len = strlen(str1);
@@ -27,12 +21,9 @@ int concat (char* str1, char* str3) {
 
     free(str2);
     return 0;
-
-
  }
 
-int main()
-{
+int main() {
     int dir_count = 0;
     struct dirent* dent;
 
