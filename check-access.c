@@ -16,21 +16,6 @@
 #include <pwd.h>
 #include <grp.h>
 
-
-/*
- struct stat {
- dev_t     st_dev;      ID of device containing file
-mode_t    st_mode;     protection
-nlink_t   st_nlink;    number of hard links
-uid_t     st_uid;     user ID of owner
-gid_t     st_gid;      group ID of owner
-off_t     st_size;     total size, in bytes
-time_t    st_atime;    time of last access
-time_t    st_mtime;    time of last modification
-};
- 
-mode  | links |  owner  | group |  bytes | last modified | path.*/
-
 int main (int argc, char* argv[]) {
     char* path = argv[1];
     int rval;
@@ -47,14 +32,12 @@ int main (int argc, char* argv[]) {
         return 0;
     }
     
-    
     // Check read access.
     rval = access (path, R_OK);
     if (rval == 0)
         printf ("%s is readable\n", path);
     else
         printf ("%s is not readable (access denied)\n", path);
-    
     
     // Check write access.
     rval = access (path, W_OK);
@@ -65,7 +48,6 @@ int main (int argc, char* argv[]) {
     else if (errno == EROFS)
         printf ("%s is not writable (read-only filesystem)\n", path);
     
-    
     // Check read access.
     rval = access (path, X_OK);
     if (rval == 0)
@@ -73,7 +55,6 @@ int main (int argc, char* argv[]) {
     else
         printf ("%s is not executable (access denied)\n", path);
 
-    
     char cwd[100000];
     getcwd(cwd, sizeof(cwd));
     //printf("\n%s", cwd);
@@ -99,11 +80,10 @@ int main (int argc, char* argv[]) {
     printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
     printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
     
-    printf("\nThe file %s a symbolic link", (S_ISLNK(fileStat.st_mode)) ? "is" : "is not");
+    //printf("\nThe file %s a symbolic link", (S_ISLNK(fileStat.st_mode)) ? "is" : "is not");
     
     printf("\nLast modified time: %s", ctime(&fileStat.st_mtime));
     printf("Last access time: %s", ctime(&fileStat.st_atime));
-    
     
     struct group *grp;
     struct passwd *pwd;
@@ -113,8 +93,6 @@ int main (int argc, char* argv[]) {
     
     pwd = getpwuid(fileStat.st_uid);
     printf("username: %s\n", pwd->pw_name);
-    
-    
     
     char buff[20];
     struct tm * timeinfo;

@@ -28,7 +28,7 @@ char* concat (char* str1, char* str3) {
 }
 
 int main (int argc, char *argv[]) {
-    if (argc != 1){
+    if (argc != 1) {
         fprintf(stderr, "Ejecute el programa sin introducir parametros");
         return 1;
     }
@@ -49,6 +49,7 @@ int main (int argc, char *argv[]) {
     pid_t childpid = 0;
     char* path;                         //ruta de cada hijo
     
+    //Recorro directorios
     while((dent = readdir(srcdir)) != NULL)
     {
         struct stat st;
@@ -63,11 +64,17 @@ int main (int argc, char *argv[]) {
         
         // Si hay directorio, imprime nombre, etc
         if (S_ISDIR(st.st_mode)){
-            path = concat(cwd, dent->d_name);      //concateno el nombre del directorio inicial con el actual
+            path = concat(cwd, dent->d_name);  //concateno el nombre del directorio inicial con el actual
             dir_count++;
+            childpid = fork();
+            
+            if (childpid == -1) {
+                perror("fork failure");
+                exit(EXIT_FAILURE);
+            }
             
             // Creo hijos y les asigno el subdirectorio actual
-            if ((childpid = fork()) <= 0) {
+            else if (childpid == 0) {
                 if (chdir(path) == -1) {
                     printf("Failed to change directory: %s\n", strerror(errno));
                     return 0;
@@ -75,17 +82,18 @@ int main (int argc, char *argv[]) {
                 break;
              }
             
-            //else
-              //  printf("\nSoy padre, debería esperar a mis hijos?");
+            else {
+                waitpid(-1, NULL, 0);
+                //printf("\npid in parent=%d and childid=%d",getpid(),childpid);
+            }
         }
     }
     
     closedir(srcdir);
-    printf("\nEn total encontre %d directorios:\n", dir_count);
-
-    char cwd2[100000];
-    getcwd(cwd2, sizeof(cwd2));
-    printf("\nMy PID: %d\tMY PPID: %d\nMy path: %s\n",getpid(), getppid(),cwd2);
+    
+    printf("\nEn total encontre %d directorios:", dir_count);
+    getcwd(cwd, sizeof(cwd));
+    printf("\nMy PID: %d\tMY PPID: %d\nMy path: %s\n",getpid(), getppid(),cwd);
     
     return 0;
 }
