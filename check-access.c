@@ -6,20 +6,14 @@
 //  Copyright © 2017 Juan Ortiz and Andrés Buelva. All rights reserved.
 //
 
-#include <stdio.h>
-#include <errno.h>
-#include <unistd.h>
+#include "check-access.h"
 
-#include <time.h>
-#include <sys/stat.h>
-
-#include <pwd.h>
-#include <grp.h>
-
-int main (int argc, char* argv[]) {
-    char* path = argv[1];
-    int rval;
-
+int ObtainInfo (char* path) {
+    char cwd[100000];
+    getcwd(cwd, sizeof(cwd));
+    
+    /*int rval;
+    
     // Check file existence.
     rval = access (path, F_OK);
     if (rval == 0)
@@ -54,21 +48,18 @@ int main (int argc, char* argv[]) {
         printf ("%s is executable\n", path);
     else
         printf ("%s is not executable (access denied)\n", path);
+    */
 
-    char cwd[100000];
-    getcwd(cwd, sizeof(cwd));
     //printf("\n%s", cwd);
     
     struct stat fileStat;
     if(stat(cwd,&fileStat) < 0)
         return 1;
     
-    printf("Information for %s\n",argv[1]);
+    printf("Information for %s\n", path);
     printf("---------------------------\n");
-    printf("File Size: \t\t%lld bytes\n",fileStat.st_size);
-    printf("Number of Links: \t%d\n",fileStat.st_nlink);
     
-    printf("File Permissions: \t");
+    //printf("File Permissions: \t");
     printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
     printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
     printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
@@ -81,25 +72,35 @@ int main (int argc, char* argv[]) {
     printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
     
     //printf("\nThe file %s a symbolic link", (S_ISLNK(fileStat.st_mode)) ? "is" : "is not");
+    printf("  %d ",fileStat.st_nlink); //Number of Links
     
-    printf("\nLast modified time: %s", ctime(&fileStat.st_mtime));
-    printf("Last access time: %s", ctime(&fileStat.st_atime));
-    
-    struct group *grp;
     struct passwd *pwd;
-    
-    grp = getgrgid(fileStat.st_gid);
-    printf("group: %s\n", grp->gr_name);
+    struct group *grp;
     
     pwd = getpwuid(fileStat.st_uid);
-    printf("username: %s\n", pwd->pw_name);
+    printf(" %s ", pwd->pw_name); //username
     
+    grp = getgrgid(fileStat.st_gid);
+    printf(" %s ", grp->gr_name);//group
+    
+    printf(" %lld ",fileStat.st_size); //File Size
+
     char buff[20];
     struct tm * timeinfo;
     
     timeinfo = localtime (&(fileStat.st_mtime));
     strftime(buff, 20, "%b %d %H:%M", timeinfo);
-    printf("%s",buff);
+    printf(" %s ",buff);
+    
+    timeinfo = localtime (&(fileStat.st_atime));
+    strftime(buff, 20, "%b %d %H:%M", timeinfo);
+    printf(" %s ",buff);
+
+    
+    //printf(" %s ", ctime(&fileStat.st_mtime)); //Last modified time
+    //printf(" %s ", ctime(&fileStat.st_atime));//Last access time
+    
+    // -rw-r--r--@  1 juantepedino  staff  416420 Feb 19 13:01 Estructura y Salida ELS.pdf
     
     return 0;
 }

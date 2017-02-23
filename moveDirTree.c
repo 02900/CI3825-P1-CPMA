@@ -7,6 +7,8 @@
 //
 
 #include "moveDirTree.h"
+#include "check-access.h"
+#include "concatenar.h"
 
 /* Compare files by name. */
 int entcmp(const FTSENT **a, const FTSENT **b)
@@ -56,8 +58,15 @@ void pmatch(char *dir, const char *pattern)
          * path. This check uses FNM_PERIOD, so "*.c" will not
          * match ".invisible.c".
          */
-        if (fnmatch(pattern, f->fts_name, FNM_PERIOD) == 0)
+        if (fnmatch(pattern, f->fts_name, FNM_PERIOD) == 0) {
             puts(f->fts_path);
+            char* path;                         //ruta de cada hijo
+            char cwd[100000];
+            getcwd(cwd, sizeof(cwd));           //Mi ruta inicial
+            //path = concat(cwd, f->fts_parent->fts_name);  //concateno el nombre del directorio inicial con el actual
+            //printf("\n\n%s\n\n", path);
+            ObtainInfo(path);
+        }
         
         /*
          * A cycle happens when a symbolic link (or perhaps a

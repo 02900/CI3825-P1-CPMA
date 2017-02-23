@@ -64,6 +64,7 @@ int main (int argc, char *argv[]) {
         
         // Si hay directorio, imprime nombre, etc
         if (S_ISDIR(st.st_mode)){
+            
             path = concat(cwd, dent->d_name);  //concateno el nombre del directorio inicial con el actual
             dir_count++;
             childpid = fork();
