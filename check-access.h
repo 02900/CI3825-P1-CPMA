@@ -19,6 +19,6 @@
 #include <pwd.h>
 #include <grp.h>
 
-int ObtainInfo (char* path);
+int ObtainInfo (const char* path);
 
 #endif /* check_access_h */

@@ -59,12 +59,11 @@ void pmatch(char *dir, const char *pattern)
          * match ".invisible.c".
          */
         if (fnmatch(pattern, f->fts_name, FNM_PERIOD) == 0) {
-            puts(f->fts_path);
             char* path;                         //ruta de cada hijo
             char cwd[100000];
             getcwd(cwd, sizeof(cwd));           //Mi ruta inicial
-            //path = concat(cwd, f->fts_parent->fts_name);  //concateno el nombre del directorio inicial con el actual
-            //printf("\n\n%s\n\n", path);
+            path = concat(cwd, f->fts_parent->fts_name);  //concateno el nombre del directorio inicial con el actual
+            //printf("\nSOY shh %s\n\n", path);
             ObtainInfo(path);
         }
         

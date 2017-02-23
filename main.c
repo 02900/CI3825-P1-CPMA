@@ -7,10 +7,17 @@
 //
 
 #include <stdio.h>
-#include "moveDirTree.h"
+//#include "moveDirTree.h"
+#include <unistd.h>
+#include "Directories.h"
+
 
 int main (int argc, char* argv[])
 {
-    pmatch(".", "*.c");
+    //pmatch(".", "*.c");
+    
+    char cwd[100000];
+    getcwd(cwd, sizeof(cwd));
+    recursiveList(cwd);
     return 0;
 }

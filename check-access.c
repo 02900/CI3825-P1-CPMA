@@ -8,9 +8,9 @@
 
 #include "check-access.h"
 
-int ObtainInfo (char* path) {
-    char cwd[100000];
-    getcwd(cwd, sizeof(cwd));
+int ObtainInfo (const char* path) {
+    //char cwd[100000];
+    //getcwd(cwd, sizeof(cwd));
     
     /*int rval;
     
@@ -49,15 +49,12 @@ int ObtainInfo (char* path) {
     else
         printf ("%s is not executable (access denied)\n", path);
     */
-
-    //printf("\n%s", cwd);
     
     struct stat fileStat;
-    if(stat(cwd,&fileStat) < 0)
+    if(stat(path,&fileStat) < 0)
         return 1;
     
-    printf("Information for %s\n", path);
-    printf("---------------------------\n");
+    //printf("Information for %s\n", path);
     
     //printf("File Permissions: \t");
     printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
@@ -95,8 +92,9 @@ int ObtainInfo (char* path) {
     timeinfo = localtime (&(fileStat.st_atime));
     strftime(buff, 20, "%b %d %H:%M", timeinfo);
     printf(" %s ",buff);
-
     
+    printf(" %s\n\n", path);
+
     //printf(" %s ", ctime(&fileStat.st_mtime)); //Last modified time
     //printf(" %s ", ctime(&fileStat.st_atime));//Last access time
     
