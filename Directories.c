@@ -28,9 +28,6 @@ int list(const char *name, const struct stat *status, int type) {
     if(type == FTW_DNR)
         return 0;
     
-    if(type == FTW_DP)
-        return 0;
-    
     if(type == FTW_F && strstr(name, "core") != NULL)
         ObtainInfo(name, 1, fp);
 

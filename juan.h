@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <memory.h>
+#include <sys/wait.h>
 
 int forkear (char* salida);
 

@@ -108,11 +108,11 @@ int ObtainInfo (const char* path, int x, FILE* fp) {
         printf(" %s ",buff);
         fprintf(fp, " %s ",buff);
         
-        printf(" %d ",fileStat.st_nlink); //Number of Links
-        fprintf(fp, " %d ",fileStat.st_nlink); //Number of Links
+        printf(" %d ", (int) fileStat.st_nlink); //Number of Links
+        fprintf(fp, " %d ", (int) fileStat.st_nlink); //Number of Links
     }
     
-    printf(" %lld\n",fileStat.st_size); //File Size
-    fprintf(fp, " %lld\n",fileStat.st_size); //File Size
+    printf(" %lld\n", (long long int) fileStat.st_size); //File Size
+    fprintf(fp, " %lld\n", (long long int) fileStat.st_size); //File Size
     return 0;
 }
