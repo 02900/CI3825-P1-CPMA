@@ -8,7 +8,7 @@
 
 #include "Directories.h"
 #include "check-access.h"
-#include "concatenar.h"
+//#include "concatenar.h"
 
 //Recursive directory walk
 

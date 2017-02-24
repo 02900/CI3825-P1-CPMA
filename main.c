@@ -9,15 +9,12 @@
 #include <stdio.h>
 //#include "moveDirTree.h"
 #include <unistd.h>
-#include "Directories.h"
-
+#include "juan.h"
 
 int main (int argc, char* argv[])
 {
     //pmatch(".", "*.c");
     
-    char cwd[100000];
-    getcwd(cwd, sizeof(cwd));
-    recursiveList(cwd);
+    forkear();
     return 0;
 }

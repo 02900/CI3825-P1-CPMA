@@ -7,6 +7,7 @@
 //
 
 #include "juan.h"
+#include "Directories.h"
 
 /*Funcion para concatenar strings*/
 /*me sirve para armar la ruta absoluta de una carpeta*/
@@ -27,11 +28,7 @@ char* concat (char* str1, char* str3) {
     return str4;
 }
 
-int main (int argc, char *argv[]) {
-    if (argc != 1) {
-        fprintf(stderr, "Ejecute el programa sin introducir parametros");
-        return 1;
-    }
+int forkear () {
     
     int dir_count = 0;
     struct dirent* dent;
@@ -61,12 +58,13 @@ int main (int argc, char *argv[]) {
             perror(dent->d_name);
             continue;
         }
-        
+
         // Si hay directorio, imprime nombre, etc
         if (S_ISDIR(st.st_mode)){
             
             path = concat(cwd, dent->d_name);  //concateno el nombre del directorio inicial con el actual
             dir_count++;
+            
             childpid = fork();
             
             if (childpid == -1) {
@@ -84,17 +82,19 @@ int main (int argc, char *argv[]) {
              }
             
             else {
+            
                 waitpid(-1, NULL, 0);
                 //printf("\npid in parent=%d and childid=%d",getpid(),childpid);
             }
         }
     }
-    
     closedir(srcdir);
     
-    printf("\nEn total encontre %d directorios:", dir_count);
-    getcwd(cwd, sizeof(cwd));
-    printf("\nMy PID: %d\tMY PPID: %d\nMy path: %s\n",getpid(), getppid(),cwd);
-    
+    //getcwd(cwd, sizeof(cwd));
+    //printf("\n%s", cwd);
+    recursiveList(cwd);
+
+    //printf("\nMy PID: %d\tMY PPID: %d\nMy path: %s\n",getpid(), getppid(),cwd);
+    //exit(0);
     return 0;
 }

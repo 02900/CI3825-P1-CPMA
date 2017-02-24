@@ -22,5 +22,6 @@
 #include <memory.h>
 
 char* concat (char* str1, char* str3);
+int forkear ();
 
 #endif /* juan_h */
