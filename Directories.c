@@ -20,7 +20,7 @@ int recursiveList(char* path, char* out) {
 }
 
 int list(const char *name, const struct stat *status, int type) {
-    FILE* fp = fopen (salida, "w");
+    //FILE* fp = fopen (salida, "w");
 
     if(type == FTW_NS)
         return 0;
@@ -32,12 +32,12 @@ int list(const char *name, const struct stat *status, int type) {
         return 0;
     
     if(type == FTW_F && strstr(name, "core") != NULL)
-        ObtainInfo(name, 1, fp);
+        ObtainInfo(name, 1);
 
     if(type == FTW_D && strcmp(".", name) != 0)
-        ObtainInfo(name, 0, fp);
+        ObtainInfo(name, 0);
     
-    fclose(fp);
+    //fclose(fp);
     return 0;
 }
 

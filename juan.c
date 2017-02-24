@@ -17,7 +17,9 @@ int forkear (char* salida) {
     struct dirent* dent;
     
     char cwd[100000];
+    char cwdOri[100000];
     getcwd(cwd, sizeof(cwd));           //Mi ruta inicial
+    getcwd(cwdOri, sizeof(cwdOri));           //Mi ruta inicial
     
     DIR* srcdir = opendir(cwd);
     
@@ -44,7 +46,6 @@ int forkear (char* salida) {
 
         // Si hay directorio, imprime nombre, etc
         if (S_ISDIR(st.st_mode)){
-            
             path = concat(cwd, dent->d_name);  //concateno el nombre del directorio inicial con el actual
             out = concat2(salida, dent->d_name);  //concateno el nombre del directorio inicial con el actual
 
@@ -59,7 +60,6 @@ int forkear (char* salida) {
             
             // Creo hijos y les asigno el subdirectorio actual
             else if (childpid == 0) {
-                //printf("\n%s", out);
                 if (chdir(path) == -1) {
                     printf("Failed to change directory: %s\n", strerror(errno));
                     return 0;
@@ -69,16 +69,18 @@ int forkear (char* salida) {
             
             else {
                 waitpid(-1, NULL, 0);
-                out = salida;
+                //out = salida;
             }
         }
     }
     closedir(srcdir);
     
     getcwd(cwd, sizeof(cwd));
-    printf("\n%s", cwd);
-    printf("\n%s", out);
-    //recursiveList(cwd, out);
+    if (strcmp(cwd, cwdOri) != 0){
+        //printf("\n%s\n\n", cwd);
+        //printf("\n%s", out);
+        recursiveList(cwd, out);
+    }
 
     exit(0);
     return 0;

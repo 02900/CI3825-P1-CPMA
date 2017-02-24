@@ -8,7 +8,7 @@
 
 #include "check-access.h"
 
-int ObtainInfo (const char* path, int x, FILE* fp) {
+int ObtainInfo (const char* path, int x) {
     int rval;
     /*
     // Check file existence.
@@ -53,7 +53,7 @@ int ObtainInfo (const char* path, int x, FILE* fp) {
     if(stat(path,&fileStat) < 0)
         return 1;
     printf("%s  ", path);
-    fprintf(fp, "%s  ", path);
+   // fprintf(fp, "%s  ", path);
     
     //printf("Information for %s\n", path);
     if (x==0){
@@ -69,7 +69,7 @@ int ObtainInfo (const char* path, int x, FILE* fp) {
         printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
         printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
         
-        fprintf(fp, (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
+        /*fprintf(fp, (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
         fprintf(fp, (fileStat.st_mode & S_IRUSR) ? "r" : "-");
         fprintf(fp, (fileStat.st_mode & S_IWUSR) ? "w" : "-");
         fprintf(fp, (fileStat.st_mode & S_IXUSR) ? "x" : "-");
@@ -78,18 +78,18 @@ int ObtainInfo (const char* path, int x, FILE* fp) {
         fprintf(fp, (fileStat.st_mode & S_IXGRP) ? "x" : "-");
         fprintf(fp, (fileStat.st_mode & S_IROTH) ? "r" : "-");
         fprintf(fp, (fileStat.st_mode & S_IWOTH) ? "w" : "-");
-        fprintf(fp, (fileStat.st_mode & S_IXOTH) ? "x" : "-");
+        fprintf(fp, (fileStat.st_mode & S_IXOTH) ? "x" : "-");*/
         
         struct passwd *pwd;
         struct group *grp;
         
         pwd = getpwuid(fileStat.st_uid);
         printf(" %s ", pwd->pw_name); //username
-        fprintf(fp, " %s ", pwd->pw_name); //username
+        //fprintf(fp, " %s ", pwd->pw_name); //username
         
         grp = getgrgid(fileStat.st_gid);
         printf(" %s ", grp->gr_name);//group
-        fprintf(fp, " %s ", grp->gr_name);//group
+       // fprintf(fp, " %s ", grp->gr_name);//group
     }
     
 
@@ -99,20 +99,20 @@ int ObtainInfo (const char* path, int x, FILE* fp) {
     
     strftime(buff, 20, "%Y-%m-%d", timeinfo);
     printf(" %s ",buff);
-    fprintf(fp, " %s ",buff);
+   // fprintf(fp, " %s ",buff);
     
     if (x==0){
         timeinfo = localtime (&(fileStat.st_atime));
         strftime(buff, 20, "%Y-%m-%d", timeinfo);
         //strftime(buff, 20, "%b %d %H:%M", timeinfo);
         printf(" %s ",buff);
-        fprintf(fp, " %s ",buff);
+      //  fprintf(fp, " %s ",buff);
         
         printf(" %d ",fileStat.st_nlink); //Number of Links
-        fprintf(fp, " %d ",fileStat.st_nlink); //Number of Links
+      //  fprintf(fp, " %d ",fileStat.st_nlink); //Number of Links
     }
     
     printf(" %lld\n",fileStat.st_size); //File Size
-    fprintf(fp, " %lld\n",fileStat.st_size); //File Size
+  //  fprintf(fp, " %lld\n",fileStat.st_size); //File Size
     return 0;
 }
