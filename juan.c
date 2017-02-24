@@ -8,27 +8,10 @@
 
 #include "juan.h"
 #include "Directories.h"
+#include "concatenar.h"
 
-/*Funcion para concatenar strings*/
-/*me sirve para armar la ruta absoluta de una carpeta*/
-char* concat (char* str1, char* str3) {
-    char c = '/';
-    
-    size_t len = strlen(str1);
-    char *str2 = malloc(len + 1 + 1 ); /* one for extra char, one for trailing zero */
-    strcpy(str2, str1);
-    str2[len] = c;
-    str2[len + 1] = '\0';
-    
-    char * str4 = (char *) malloc(1 + strlen(str2)+ strlen(str3) );
-    strcpy(str4, str2);
-    strcat(str4, str3);
-    
-    free(str2);
-    return str4;
-}
 
-int forkear () {
+int forkear (char* salida) {
     
     int dir_count = 0;
     struct dirent* dent;
@@ -44,13 +27,13 @@ int forkear () {
     }
     
     pid_t childpid = 0;
-    char* path;                         //ruta de cada hijo
+    char* path = NULL;                         //ruta de cada hijo
+    char* out = NULL;                         //ruta de cada hijo
     
     //Recorro directorios
     while((dent = readdir(srcdir)) != NULL)
     {
         struct stat st;
-        
         if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0)
             continue;
         
@@ -63,6 +46,8 @@ int forkear () {
         if (S_ISDIR(st.st_mode)){
             
             path = concat(cwd, dent->d_name);  //concateno el nombre del directorio inicial con el actual
+            out = concat2(salida, dent->d_name);  //concateno el nombre del directorio inicial con el actual
+
             dir_count++;
             
             childpid = fork();
@@ -74,6 +59,7 @@ int forkear () {
             
             // Creo hijos y les asigno el subdirectorio actual
             else if (childpid == 0) {
+                //printf("\n%s", out);
                 if (chdir(path) == -1) {
                     printf("Failed to change directory: %s\n", strerror(errno));
                     return 0;
@@ -82,19 +68,18 @@ int forkear () {
              }
             
             else {
-            
                 waitpid(-1, NULL, 0);
-                //printf("\npid in parent=%d and childid=%d",getpid(),childpid);
+                out = salida;
             }
         }
     }
     closedir(srcdir);
     
-    //getcwd(cwd, sizeof(cwd));
-    //printf("\n%s", cwd);
-    recursiveList(cwd);
+    getcwd(cwd, sizeof(cwd));
+    printf("\n%s", cwd);
+    printf("\n%s", out);
+    //recursiveList(cwd, out);
 
-    //printf("\nMy PID: %d\tMY PPID: %d\nMy path: %s\n",getpid(), getppid(),cwd);
-    //exit(0);
+    exit(0);
     return 0;
 }

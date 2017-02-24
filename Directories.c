@@ -11,17 +11,17 @@
 //#include "concatenar.h"
 
 //Recursive directory walk
+char* salida;
 
-int recursiveList(char* path) {
-    //if(argc == 1)
-    //    ftw(".", list, 1);
-    //else
-    ftw(".", list, 1); //sustituir por path al final
-    
+int recursiveList(char* path, char* out) {
+    salida = out;
+    ftw(path, list, 1); //sustituir por path al final
     return 0;
 }
 
 int list(const char *name, const struct stat *status, int type) {
+    FILE* fp = fopen (salida, "w");
+
     if(type == FTW_NS)
         return 0;
     
@@ -31,16 +31,13 @@ int list(const char *name, const struct stat *status, int type) {
     if(type == FTW_DP)
         return 0;
     
-    if(type == FTW_F)
-        return 0;
-        // printf("0%3o\t%s\n", status->st_mode&0777, name);
+    if(type == FTW_F && strstr(name, "core") != NULL)
+        ObtainInfo(name, 1, fp);
+
+    if(type == FTW_D && strcmp(".", name) != 0)
+        ObtainInfo(name, 0, fp);
     
-    if(type == FTW_D && strcmp(".", name) != 0){
-        //printf("0%3o\t%s/\n", status->st_mode&0777, name);
-        ObtainInfo(name);
-
-    }
-
+    fclose(fp);
     return 0;
 }
 

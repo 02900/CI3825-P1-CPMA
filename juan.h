@@ -10,18 +10,11 @@
 #define juan_h
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-
-
 #include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <memory.h>
 
-char* concat (char* str1, char* str3);
-int forkear ();
+int forkear (char* salida);
 
 #endif /* juan_h */

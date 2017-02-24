@@ -24,5 +24,5 @@ Recorrer directorio en busca de subdirectorios
  
  
  
- 
+ no se utiliza
  */

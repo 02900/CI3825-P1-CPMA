@@ -7,14 +7,13 @@
 //
 
 #include <stdio.h>
-//#include "moveDirTree.h"
-#include <unistd.h>
 #include "juan.h"
 
 int main (int argc, char* argv[])
 {
-    //pmatch(".", "*.c");
-    
-    forkear();
+    if(argc != 2)
+        printf("Debe introducir un nombre para los archivos de reporte");
+    else
+        forkear(argv[1]);
     return 0;
 }

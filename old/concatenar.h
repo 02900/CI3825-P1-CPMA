@@ -15,7 +15,11 @@
 #include <unistd.h>
 #include <errno.h>
 
-char* concat (char* str1, char* str3);
-char* concat2 (char* str1, char* str3);
+#include <dirent.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <memory.h>
 
+char* concat (char* str1, char* str3);
 #endif /* concatenar_h */
+//no se utiliza

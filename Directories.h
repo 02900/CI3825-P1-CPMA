@@ -16,8 +16,7 @@
 
 int list(const char *name, const struct stat *status, int type);
 
-int recursiveList();
-
+int recursiveList(char* path, char* out);
 
 #endif /* Directories_h */
 
