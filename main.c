@@ -2,13 +2,18 @@
 //  main.c
 //  CPMA
 //
-//  Created by Juan Tepedino on 20/2/17.
-//  Copyright © 2017 Juan Tepedino. All rights reserved.
+//  Copyright © 2017 Juan Ortiz and Andrés Buelva. All rights reserved.
 //
 
 #include <stdio.h>
-#include "juan.h"
+#include "crearProcesos.h"
 
+/*
+Funcion principal donde se ejecutara el programa
+Entrada argc: Numero de argumenos
+Entrada argv: Parametro introducido por pantalla
+Salida: un entero que garantiza la salida del programa
+*/
 int main (int argc, char* argv[])
 {
     if(argc != 2)

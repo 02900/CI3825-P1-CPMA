@@ -1,14 +1,14 @@
 all: clean els
 
 # Esta regla compila el programa principal
-els: main.o juan.o concatenar.o Directories.o check-access.o
-	gcc -o els main.o juan.o concatenar.o Directories.o check-access.o
+els: main.o crearProcesos.o concatenar.o Directories.o accessInfo.o
+	gcc -o els main.o crearProcesos.o concatenar.o Directories.o accessInfo.o
 
-main.o: main.c juan.h concatenar.h Directories.h check-access.h
+main.o: main.c crearProcesos.h concatenar.h Directories.h accessInfo.h
 	gcc -c main.c
 
-juan.o: juan.c concatenar.h Directories.h check-access.h
-	gcc -c juan.c
+crearProcesos.o: crearProcesos.c concatenar.h Directories.h accessInfo.h
+	gcc -c crearProcesos.c
 
 clean:
 	rm -f els *.o

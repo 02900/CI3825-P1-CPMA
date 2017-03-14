@@ -2,19 +2,23 @@
 //  concatenar.c
 //  CPMA
 //
-//  Created by Juan Tepedino on 23/2/17.
-//  Copyright © 2017 Juan Tepedino. All rights reserved.
+//  Copyright © 2017 Juan Ortiz and Andrés Buelvas. All rights reserved.
 //
 
 #include "concatenar.h"
 
-/*Funcion para concatenar strings*/
-/*me sirve para armar la ruta absoluta de una carpeta*/
+/*
+Funcion que dado dos string, los concatena a a traves de un "/". Sirve para
+armar rutas de archivos.
+Entrada str1: ruta de archivo de tipo string
+Entrada str3: ruta de archivo de tipo string
+Salida: path o ruta concatenada
+*/
 char* concat (char* str1, char* str3) {
     char c = '/';
     
     size_t len = strlen(str1);
-    char *str2 = malloc(len + 1 + 1 ); /* one for extra char, one for trailing zero */
+    char *str2 = malloc(len + 1 + 1 ); 
     strcpy(str2, str1);
     str2[len] = c;
     str2[len + 1] = '\0';
@@ -27,11 +31,17 @@ char* concat (char* str1, char* str3) {
     return str4;
 }
 
+/*
+Funcion que dado dos string, los concatena a a traves de un "-".
+Entrada str1: ruta de archivo de tipo string
+Entrada str3: ruta de archivo de tipo string
+Salida: path o ruta concatenada
+*/
 char* concat2 (char* str1, char* str3) {
     char c = '-';
     
     size_t len = strlen(str1);
-    char *str2 = malloc(len + 1 + 1 ); /* one for extra char, one for trailing zero */
+    char *str2 = malloc(len + 1 + 1 );
     strcpy(str2, str1);
     str2[len] = c;
     str2[len + 1] = '\0';

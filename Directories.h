@@ -2,8 +2,7 @@
 //  Directories.h
 //  CPMA
 //
-//  Created by Juan Tepedino on 23/2/17.
-//  Copyright © 2017 Juan Tepedino. All rights reserved.
+//  Copyright © 2017 Juan Ortiz and Andrés Buelva. All rights reserved.
 //
 
 #ifndef Directories_h
@@ -15,8 +14,8 @@
 #include <string.h>
 
 int list(const char *name, const struct stat *status, int type);
-
-int recursiveList(char* path, char* out);
+int list2(const char *name, const struct stat *status, int type);
+int recursiveList(char* path, char* out, int x);
 
 #endif /* Directories_h */
 

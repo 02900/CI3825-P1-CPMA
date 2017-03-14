@@ -2,8 +2,7 @@
 //  concatenar.h
 //  CPMA
 //
-//  Created by Juan Tepedino on 23/2/17.
-//  Copyright © 2017 Juan Tepedino. All rights reserved.
+//  Copyright © 2017 Juan Ortiz and Andrés Buelva. All rights reserved.
 //
 
 #ifndef concatenar_h
@@ -17,5 +16,6 @@
 
 char* concat (char* str1, char* str3);
 char* concat2 (char* str1, char* str3);
+char* concat3 (const char* str1, const char* str3);
 
 #endif /* concatenar_h */

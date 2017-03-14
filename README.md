@@ -1,4 +1,15 @@
-# CI3825-P1-CPMA
-#  Copyright © 2017 Juan Ortiz and Andrés Buelva. All rights reserved.
+//
+//  Created by Juan Tepedino on 20/2/17.
+//  Copyright © 2017 Juan Ortiz and Andrés Buelva. All rights reserved.
+//
 Sistemas Operativos (CI3825) Proyecto 1: Comunicación entre Procesos y Manejo de Archivos
 Familiarización con las llamadas al sistema para la creación y acceso a las estructuras del sistema de archivos; y para el envío y recepción de información entre procesos.
+Recorrer directorio en busca de subdirectorios
+!! Se ha encontrado un directorio !!
+    \___
+        \ HACER FORK ()
+          CAMBIAR DRECTORIO ACTUAL EN CHILD
+           Llamar a recursion
+                Obtenner informacion
+                    Darlsela al papi
+ 
